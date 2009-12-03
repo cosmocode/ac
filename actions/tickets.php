@@ -1,6 +1,7 @@
 <?php
 class syntax_plugin_activecosmo_action_tickets extends syntax_plugin_activecosmo_action {
-    public function __construct($data) {
+    public function __construct($ac, $data) {
+        parent::__construct($ac, $data);
         global $ID;
         if (is_null($data)) {
             $data = substr($ID, strpos($ID, 'projekt:') + 8);
@@ -9,7 +10,7 @@ class syntax_plugin_activecosmo_action_tickets extends syntax_plugin_activecosmo
     }
 
     public function render() {
-        $projects = syntax_plugin_activecosmo::$ac->get('/projects');
+        $projects = $this->ac->get('/projects');
         $project_id = false;
         foreach($projects as $project) {
             if ($project->name === $this->project) {
@@ -22,7 +23,7 @@ class syntax_plugin_activecosmo_action_tickets extends syntax_plugin_activecosmo
             return $output;
         }
 
-        $tickets = syntax_plugin_activecosmo::$ac->get('/projects/' . $project_id . '/tickets');
+        $tickets = $this->ac->get('/projects/' . $project_id . '/tickets');
         if (!$tickets) {
             $output .= '<p>No active tickets found!</p>';
             return $output;
@@ -30,9 +31,9 @@ class syntax_plugin_activecosmo_action_tickets extends syntax_plugin_activecosmo
 
         $output .= '<ul>';
         foreach ($tickets as $ticket) {
-            $output .= '<li><div class="li">' . syntax_plugin_activecosmo::$ac->objToString($ticket) . '</div></li>' . DOKU_LF;
+            $output .= '<li><div class="li">' . $this->ac->objToString($ticket) . '</div></li>' . DOKU_LF;
 
-            $details = syntax_plugin_activecosmo::$ac->get('/projects/' . $project_id . '/tickets/' . $ticket->ticket_id);
+            $details = $this->ac->get('/projects/' . $project_id . '/tickets/' . $ticket->ticket_id);
             if (count($details->tasks) === 0) {
                 continue;
             }
@@ -41,7 +42,7 @@ class syntax_plugin_activecosmo_action_tickets extends syntax_plugin_activecosmo
                 if ($task->completed_on) {
                     continue;
                 }
-                $output .= '<li><div class="li">' . syntax_plugin_activecosmo::$ac->objToString($task) . '</div></li>' . DOKU_LF;
+                $output .= '<li><div class="li">' . $this->ac->objToString($task) . '</div></li>' . DOKU_LF;
             }
             $output .= '</ul>';
         }

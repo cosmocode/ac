@@ -1,5 +1,10 @@
 <?php
 abstract class syntax_plugin_activecosmo_action {
-    abstract public function __construct($data);
+    protected $ac = null;
+
+    public function __construct($ac, $data) {
+        $this->ac = $ac;
+    }
+
     abstract public function render();
 }

@@ -35,13 +35,12 @@ function syntax_plugin_activecosmo_autoload($name) {
 spl_autoload_register('syntax_plugin_activecosmo_autoload');
 
 class syntax_plugin_activecosmo extends DokuWiki_Syntax_Plugin {
-
-    public static $ac;
+    private $ac = null;
 
     function __construct() {
-        syntax_plugin_activecosmo::$ac = new syntax_plugin_activecosmo_ac(
-                                'http://ac.cosmocode.de/public/api.php',
-                                '30-UECdCk98X8vFLLWnCm3nXdnFUXOMjcvOEzfPxcBt');
+        $this->ac = new syntax_plugin_activecosmo_ac(
+                                 'http://ac.cosmocode.de/public/api.php',
+                                 '30-UECdCk98X8vFLLWnCm3nXdnFUXOMjcvOEzfPxcBt');
     }
 
     function getInfo() {
@@ -53,13 +52,13 @@ class syntax_plugin_activecosmo extends DokuWiki_Syntax_Plugin {
     function getPType(){ return 'block'; }
 
     function connectTo($mode) {
-        $this->Lexer->addSpecialPattern('{{AC::.*}}', $mode, 'plugin_activecosmo');
+        $this->Lexer->addSpecialPattern('{{AC::\w+(?:>[^}]+)?}}', $mode, 'plugin_activecosmo');
     }
 
     function handle($match, $state, $pos, &$handler) {
         preg_match('/{{AC::(\w+)(?:>([^}]+))?}}/', $match, $command);
         $action_classname = 'syntax_plugin_activecosmo_action_' . $command[1];
-        return new $action_classname($command[2]);
+        return new $action_classname($this->ac, $command[2]);
     }
 
     function render($mode, &$renderer, $data) {
