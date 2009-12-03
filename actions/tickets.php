@@ -2,14 +2,13 @@
 class syntax_plugin_activecosmo_action_tickets extends syntax_plugin_activecosmo_action {
     public function __construct($data) {
         global $ID;
-        if ($data === '') {
+        if (is_null($data)) {
             $data = substr($ID, strpos($ID, 'projekt:') + 8);
         }
         $this->project = $data;
     }
 
     public function render() {
-        $output = '<h2>Active tickets for project ' . $this->project . '</h2>';
         $projects = syntax_plugin_activecosmo::$ac->get('/projects');
         $project_id = false;
         foreach($projects as $project) {
