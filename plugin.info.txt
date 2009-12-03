@@ -1,0 +1,7 @@
+base   activecosmo
+author Adrian Lang
+email  lang@cosmocode.de
+date   2009-12-03
+name   activecosmo plugin
+desc   Integrate with activecollab
+url    http://wiki.cosmo
