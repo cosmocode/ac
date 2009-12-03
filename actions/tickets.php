@@ -1,7 +1,7 @@
 <?php
 class syntax_plugin_activecosmo_action_tickets extends syntax_plugin_activecosmo_action {
     public function __construct($ac, $data) {
-        parent::__construct($ac, $data);
+        parent::__construct($ac);
         global $ID;
         if (is_null($data)) {
             $data = substr($ID, strpos($ID, 'projekt:') + 8);
@@ -9,7 +9,7 @@ class syntax_plugin_activecosmo_action_tickets extends syntax_plugin_activecosmo
         $this->project = $data;
     }
 
-    public function render() {
+    public function exec() {
         $projects = $this->ac->get('/projects');
         $project_id = false;
         foreach($projects as $project) {
@@ -31,20 +31,9 @@ class syntax_plugin_activecosmo_action_tickets extends syntax_plugin_activecosmo
 
         $output .= '<ul>';
         foreach ($tickets as $ticket) {
-            $output .= '<li><div class="li">' . $this->ac->objToString($ticket) . '</div></li>' . DOKU_LF;
-
-            $details = $this->ac->get('/projects/' . $project_id . '/tickets/' . $ticket->ticket_id);
-            if (count($details->tasks) === 0) {
-                continue;
-            }
-            $output .= '<ul>';
-            foreach($details->tasks as $task) {
-                if ($task->completed_on) {
-                    continue;
-                }
-                $output .= '<li><div class="li">' . $this->ac->objToString($task) . '</div></li>' . DOKU_LF;
-            }
-            $output .= '</ul>';
+            $tasks = new syntax_plugin_activecosmo_action_tasks($this->ac, $project_id, $ticket->ticket_id);
+            $output .= '<li><div class="li">' . $this->ac->objToString($ticket) . '</div>' .
+                       ajax_loader::getLoader($tasks) . '</li>' . DOKU_LF;
         }
         $output .= '</ul>';
 
