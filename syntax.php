@@ -17,14 +17,6 @@ require_once DOKU_PLUGIN.'syntax.php';
 require_once DOKU_PLUGIN . 'activecosmo/common.php';
 
 class syntax_plugin_activecosmo extends DokuWiki_Syntax_Plugin {
-    private $ac = null;
-
-    function __construct() {
-        $this->ac = new syntax_plugin_activecosmo_ac(
-                                 'http://ac.cosmocode.de/public/api.php',
-                                 '30-UECdCk98X8vFLLWnCm3nXdnFUXOMjcvOEzfPxcBt');
-    }
-
     function getInfo() {
         return confToHash(dirname(__FILE__).'/plugin.info.txt');
     }
@@ -34,14 +26,13 @@ class syntax_plugin_activecosmo extends DokuWiki_Syntax_Plugin {
     function getPType(){ return 'block'; }
 
     function connectTo($mode) {
-        @session_start();
-        $this->Lexer->addSpecialPattern('{{AC::\w+(?:>[^}]+)?}}', $mode, 'plugin_activecosmo');
+        $this->Lexer->addSpecialPattern('{{AC::\w+(?:>[^}]+)?}}', $mode,
+                                        'plugin_activecosmo');
     }
 
     function handle($match, $state, $pos, &$handler) {
         preg_match('/{{AC::(\w+)(?:>([^}]+))?}}/', $match, $command);
-        $action_classname = 'syntax_plugin_activecosmo_action_' . $command[1];
-        return new $action_classname($this->ac, $command[2]);
+        return array_slice($command, 1);
     }
 
     function render($mode, &$renderer, $data) {

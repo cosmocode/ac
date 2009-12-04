@@ -12,6 +12,13 @@ require_once DOKU_PLUGIN.'action.php';
 require_once DOKU_PLUGIN . 'activecosmo/common.php';
 
 class action_plugin_activecosmo extends DokuWiki_Action_Plugin {
+    private $ac = null;
+
+    function __construct() {
+        $this->ac = new syntax_plugin_activecosmo_ac(
+                                 'http://ac.cosmocode.de/public/api.php',
+                                 '30-UECdCk98X8vFLLWnCm3nXdnFUXOMjcvOEzfPxcBt');
+    }
 
     function getInfo() {
         return confToHash(dirname(__FILE__).'/plugin.info.txt');
@@ -32,7 +39,12 @@ class action_plugin_activecosmo extends DokuWiki_Action_Plugin {
         if (!ajax_loader::isLoader('activecosmo', $event->data)) {
             return;
         }
-        echo ajax_loader::handleLoad();
+
+        $command = ajax_loader::handleLoad();
+        $action_classname = 'syntax_plugin_activecosmo_action_' . $command[0];
+        $action = new $action_classname($this->ac, array_slice($command, 1));
+        echo $action->exec();
+
         $event->stopPropagation();
         $event->preventDefault();
     }

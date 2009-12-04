@@ -3,10 +3,10 @@ class syntax_plugin_activecosmo_action_tickets extends syntax_plugin_activecosmo
     public function __construct($ac, $data) {
         parent::__construct($ac);
         global $ID;
-        if (is_null($data)) {
-            $data = substr($ID, strpos($ID, 'projekt:') + 8);
+        if (is_null($data[0])) {
+            $data[0] = substr($ID, strpos($ID, 'projekt:') + 8);
         }
-        $this->project = $data;
+        $this->project = $data[0];
     }
 
     public function exec() {
@@ -29,9 +29,8 @@ class syntax_plugin_activecosmo_action_tickets extends syntax_plugin_activecosmo
 
         $output = '<ul>';
         foreach ($tickets as $ticket) {
-            $tasks = new syntax_plugin_activecosmo_action_tasks($this->ac, $project_id, $ticket->ticket_id);
             $output .= '<li><div class="li">' . $this->ac->objToString($ticket) . '</div>' .
-                       ajax_loader::getLoader('activecosmo', $tasks) . '</li>' . DOKU_LF;
+                       ajax_loader::getLoader('activecosmo', array('tasks', $project_id, $ticket->ticket_id)) . '</li>' . DOKU_LF;
         }
         $output .= '</ul>';
 

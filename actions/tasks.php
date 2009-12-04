@@ -1,7 +1,8 @@
 <?php
 class syntax_plugin_activecosmo_action_tasks extends syntax_plugin_activecosmo_action {
-    public function __construct($ac, $project_id, $ticket_id) {
+    public function __construct($ac, $data) {
         parent::__construct($ac);
+        list($project_id, $ticket_id) = $data;
         $this->project_id = $project_id;
         $this->ticket_id = $ticket_id;
     }
