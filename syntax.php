@@ -46,7 +46,7 @@ class syntax_plugin_activecosmo extends DokuWiki_Syntax_Plugin {
 
     function render($mode, &$renderer, $data) {
         if($mode == 'xhtml') {
-            $renderer->doc .= ajax_loader::getLoader($data);
+            $renderer->doc .= ajax_loader::getLoader('activecosmo', $data);
         }
     }
 }

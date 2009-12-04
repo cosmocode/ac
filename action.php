@@ -29,7 +29,7 @@ class action_plugin_activecosmo extends DokuWiki_Action_Plugin {
      * Handle AJAX request
      */
     function handle_ajax($event) {
-        if ($event->data !== 'activecosmo') {
+        if (!ajax_loader::isLoader('activecosmo', $event->data)) {
             return;
         }
         echo ajax_loader::handleLoad();

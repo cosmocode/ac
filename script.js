@@ -1,6 +1,5 @@
 function sack_form(form, func) {
     var ajax = new sack(DOKU_BASE + 'lib/exe/ajax.php');
-    ajax.setVar('call', 'activecosmo');
     function serializeByTag(tag) {
         var inps = form.getElementsByTagName(tag);
         for (var inp in inps) {
