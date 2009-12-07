@@ -1,5 +1,5 @@
 <?php
-class syntax_plugin_activecosmo_action_tickets extends syntax_plugin_activecosmo_action {
+class syntax_plugin_ac_action_tickets extends syntax_plugin_ac_action {
     public function __construct($ac, $data) {
         parent::__construct($ac);
         global $ID;

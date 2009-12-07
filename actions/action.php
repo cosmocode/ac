@@ -1,5 +1,5 @@
 <?php
-class syntax_plugin_activecosmo_action {
+class syntax_plugin_ac_action {
     protected $ac = null;
 
     public function __construct($ac) {

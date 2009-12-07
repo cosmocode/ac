@@ -1,6 +1,6 @@
 <?php
 /**
- * DokuWiki Plugin activecosmo (activecollab Component)
+ * DokuWiki Plugin ac (activecollab Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Adrian Lang <lang@cosmocode.de>
@@ -9,7 +9,7 @@
 require_once DOKU_INC . 'inc/HTTPClient.php';
 require_once DOKU_INC . 'inc/JSON.php';
 
-class syntax_plugin_activecosmo_ac {
+class syntax_plugin_ac_ac {
 
     public function __construct($url, $token) {
         $this->base_url = "{$url}?token={$token}&format=json";

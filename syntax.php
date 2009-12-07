@@ -1,6 +1,6 @@
 <?php
 /**
- * DokuWiki Plugin activecosmo (Syntax Component)
+ * DokuWiki Plugin ac (Syntax Component)
  *
  * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
  * @author  Adrian Lang <lang@cosmocode.de>
@@ -14,9 +14,9 @@ if (!defined('DOKU_TAB')) define('DOKU_TAB', "\t");
 if (!defined('DOKU_PLUGIN')) define('DOKU_PLUGIN',DOKU_INC.'lib/plugins/');
 
 require_once DOKU_PLUGIN.'syntax.php';
-require_once DOKU_PLUGIN . 'activecosmo/common.php';
+require_once DOKU_PLUGIN . 'ac/common.php';
 
-class syntax_plugin_activecosmo extends DokuWiki_Syntax_Plugin {
+class syntax_plugin_ac extends DokuWiki_Syntax_Plugin {
     function getInfo() {
         return confToHash(dirname(__FILE__).'/plugin.info.txt');
     }
@@ -27,7 +27,7 @@ class syntax_plugin_activecosmo extends DokuWiki_Syntax_Plugin {
 
     function connectTo($mode) {
         $this->Lexer->addSpecialPattern('{{AC::\w+(?:>[^}]+)?}}', $mode,
-                                        'plugin_activecosmo');
+                                        'plugin_ac');
     }
 
     function handle($match, $state, $pos, &$handler) {
@@ -37,7 +37,7 @@ class syntax_plugin_activecosmo extends DokuWiki_Syntax_Plugin {
 
     function render($mode, &$renderer, $data) {
         if($mode == 'xhtml') {
-            $renderer->doc .= ajax_loader::getLoader('activecosmo', $data);
+            $renderer->doc .= ajax_loader::getLoader('ac', $data);
         }
     }
 }
