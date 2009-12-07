@@ -17,7 +17,7 @@ class action_plugin_ac extends DokuWiki_Action_Plugin {
 
     function __construct() {
         $this->ac = new syntax_plugin_ac_ac($this->getConf('url'),
-                                                     $this->getConf('token'));
+                                            $this->getConf('token'));
     }
 
     function getInfo() {

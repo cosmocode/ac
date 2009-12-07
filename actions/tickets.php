@@ -23,7 +23,7 @@ class syntax_plugin_ac_action_tickets extends syntax_plugin_ac_action {
         $output = '<ul>';
         foreach ($tickets as $ticket) {
             $output .= '<li><div class="li">' . $this->ac->objToString($ticket) . '</div>' .
-                       ajax_loader::getLoader('activecosmo', array('tasks', $project->id, $ticket->ticket_id)) . '</li>' . DOKU_LF;
+                       ajax_loader::getLoader('ac', array('tasks', $project->id, $ticket->ticket_id)) . '</li>' . DOKU_LF;
         }
         $output .= '</ul>';
 

@@ -18,7 +18,7 @@ function syntax_plugin_ac_autoload($name) {
     if (strpos($name, 'syntax_plugin_ac_action_') !== 0) {
         return false;
     }
-    $subclass = substr($name, 33);
+    $subclass = substr($name, 24);
     if (!@file_exists(DOKU_PLUGIN . 'ac/actions/' . $subclass . '.php')) {
         eval("class syntax_plugin_ac_action_$subclass extends " .
              'syntax_plugin_ac_action { };');
