@@ -1,8 +1,9 @@
 <?php
 /**
- * Allow users to tag a page
+ * DokuWiki Plugin activecosmo (common stuff)
  *
- * @author Adrian Lang <lang@cosmocode.de>
+ * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
+ * @author  Adrian Lang <lang@cosmocode.de>
  */
 
 if(!defined('DOKU_INC')) die();

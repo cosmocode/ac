@@ -20,6 +20,6 @@ addInitEvent(function() {
     function sack_em() {
         var forms = getElementsByClass('ajax_loader', document, 'form');
         if (forms.length > 0) sack_form(forms[0], sack_em);
-    };
+    }
     sack_em();
 });

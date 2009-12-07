@@ -8,9 +8,9 @@ class syntax_plugin_activecosmo_action_tasks extends syntax_plugin_activecosmo_a
     }
 
     public function exec() {
-        $details = $this->ac->get('/projects/' . $this->project_id . '/tickets/' . $this->ticket_id);
+        $details = $this->ac->get('projects/' . $this->project_id . '/tickets/' . $this->ticket_id);
         if (count($details->tasks) === 0) {
-            return;
+            return '';
         }
         $output = '<ul>';
         foreach($details->tasks as $task) {

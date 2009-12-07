@@ -1,8 +1,9 @@
 <?php
 /**
- * Allow users to tag a page
+ * DokuWiki Plugin activecosmo (Syntax Component)
  *
- * @author Adrian Lang <lang@cosmocode.de>
+ * @license GPL 2 http://www.gnu.org/licenses/gpl-2.0.html
+ * @author  Adrian Lang <lang@cosmocode.de>
  */
 
 if(!defined('DOKU_INC')) die();
@@ -15,9 +16,8 @@ class action_plugin_activecosmo extends DokuWiki_Action_Plugin {
     private $ac = null;
 
     function __construct() {
-        $this->ac = new syntax_plugin_activecosmo_ac(
-                                 'http://ac.cosmocode.de/public/api.php',
-                                 '30-UECdCk98X8vFLLWnCm3nXdnFUXOMjcvOEzfPxcBt');
+        $this->ac = new syntax_plugin_activecosmo_ac($this->getConf('url'),
+                                                     $this->getConf('token'));
     }
 
     function getInfo() {

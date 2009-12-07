@@ -18,12 +18,36 @@ class syntax_plugin_activecosmo_ac {
     public function get($path, $data = array()) {
         $client = new DokuHTTPClient();
         $json = new JSON();
-        return $json->decode($client->get($this->base_url . '&path_info=' .
-                                          $path . buildURLparams($data, '&')));
+        return $json->decode($client->get($this->base_url . '&' .
+                                          "path_info=/{$path}&" .
+                                          buildURLparams($data, '&')));
     }
 
     public function objToString($obj) {
         return "<a href='$obj->permalink'>$obj->name</a>";
+    }
+
+    public function fetch($type, $values) {
+        $all = $this->get($type);
+        $ret = array();
+        foreach($all as $elem) {
+            $match = true;
+            foreach($values as $prop => $val) {
+                if ($elem->$prop !== $val) {
+                    $match = false;
+                    break;
+                }
+            }
+            if ($match) {
+                $ret[] = $elem;
+            }
+        }
+        return $ret;
+    }
+
+    public function fetchSingle($type, $values) {
+        $ret = $this->fetch($type, $values);
+        return (count($ret) === 0) ?  false : $ret[0];
     }
 }
 
