@@ -10,12 +10,18 @@ class syntax_plugin_ac_action_tickets extends syntax_plugin_ac_action {
     }
 
     public function exec() {
-        $project = $this->ac->fetchSingle('projects', array('name' => $this->project));
-        if ($project === false) {
-            return '<p>Project not found!</p>';
+        $projectid = 0;
+        if ((int) $this->project !== 0) {
+            $projectid = $this->project;
+        } else {
+            $project = $this->ac->fetchSingle('projects', array('name' => $this->project));
+            if ($project === false) {
+                return '<p>Project not found!</p>';
+            }
+            $projectid = $project->id;
         }
 
-        $tickets = $this->ac->get('projects/' . $project->id . '/tickets');
+        $tickets = $this->ac->get('projects/' . $projectid . '/tickets');
         if (!$tickets) {
             return '<p>No active tickets found!</p>';
         }
@@ -23,7 +29,7 @@ class syntax_plugin_ac_action_tickets extends syntax_plugin_ac_action {
         $output = '<ul>';
         foreach ($tickets as $ticket) {
             $output .= '<li><div class="li">' . $this->ac->objToString($ticket) . '</div>' .
-                       ajax_loader::getLoader('ac', array('tasks', $project->id, $ticket->ticket_id)) . '</li>' . DOKU_LF;
+                       ajax_loader::getLoader('ac', array('tasks', $projectid, $ticket->ticket_id)) . '</li>' . DOKU_LF;
         }
         $output .= '</ul>';
 
