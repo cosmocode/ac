@@ -1,7 +1,7 @@
 base   ac
 author Adrian Lang
 email  lang@cosmocode.de
-date   2009-12-03
+date   2013-12-18
 name   ac plugin
 desc   Integrate with activecollab
 url    http://github.com/cosmocode/ac
