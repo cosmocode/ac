@@ -30,12 +30,12 @@ class syntax_plugin_ac extends DokuWiki_Syntax_Plugin {
                                         'plugin_ac');
     }
 
-    function handle($match, $state, $pos, &$handler) {
+    function handle($match, $state, $pos, Doku_Handler $handler) {
         preg_match('/{{AC::(\w+)(?:>([^}]+))?}}/', $match, $command);
         return array_slice($command, 1);
     }
 
-    function render($mode, &$renderer, $data) {
+    function render($mode, Doku_Renderer $renderer, $data) {
         if($mode == 'xhtml') {
             $renderer->doc .= ajax_loader::getLoader('ac', $data);
         }
