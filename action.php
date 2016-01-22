@@ -27,7 +27,7 @@ class action_plugin_ac extends DokuWiki_Action_Plugin {
     /**
      * Register handlers
      */
-    function register(&$controller) {
+    function register( Doku_Event_Handler $controller) {
         $controller->register_hook('AJAX_CALL_UNKNOWN', 'BEFORE', $this,
                                    'handle_ajax');
     }
